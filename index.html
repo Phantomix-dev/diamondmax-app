@@ -3,6 +3,7 @@
 <head>
     <title>Phantomix | DiamondMax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
         #matrix {
@@ -65,6 +66,7 @@
             background-color: transparent;
             color: #b026ff;
             box-shadow: 0px 0px 15px #b026ff;
+        }
         
         ul {
             list-style-type: none;
@@ -75,14 +77,55 @@
         }
         li { margin-bottom: 10px; }
 
+        /* --- Professional Social Icons CSS --- */
+        .social-container {
+            margin-top: 20px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #1a1a1a;
+            color: #a0a0a0;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 24px;
+            border: 2px solid #333;
+            transition: all 0.4s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-5px);
+        }
+        .social-icon.instagram:hover {
+            color: #E1306C; border-color: #E1306C; box-shadow: 0px 0px 15px #E1306C;
+        }
+        .social-icon.whatsapp:hover {
+            color: #25D366; border-color: #25D366; box-shadow: 0px 0px 15px #25D366;
+        }
+        .social-icon.youtube:hover {
+            color: #FF0000; border-color: #FF0000; box-shadow: 0px 0px 15px #FF0000;
+        }
+        .social-icon.telegram:hover {
+            color: #0088cc; border-color: #0088cc; box-shadow: 0px 0px 15px #0088cc;
+        }
+
         @media (max-width: 768px) {
             body { padding-top: 20px; }
             h1 { font-size: 28px; }
             h2 { font-size: 22px; }
             p { font-size: 16px; padding: 0px 15px; }
             .download-btn { width: 80%; padding: 12px 0px; font-size: 18px; }
+            .social-icon { width: 45px; height: 45px; font-size: 20px; }
         }
     </style>
+    
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -144,7 +187,7 @@
 
     <hr style="border-color: #333; width: 50%; margin-top: 40px;">
     
-    <div id="waitlist-box" style="margin-top: 30px; margin-bottom: 50px;">
+    <div id="waitlist-box" style="margin-top: 30px; margin-bottom: 20px;">
         <h3 style="color: #00ffff;">🔥 Join VIP Waitlist</h3>
         <p>Get early access to DiamondMax before the world does.</p>
         
@@ -157,8 +200,16 @@
         <p id="waitlist-status" style="color: #00ff00; font-weight: bold; display: none; margin-top: 15px;"></p>
     </div>
 
+    <h3 style="color: #b026ff; margin-top: 10px;">Connect With Us</h3>
+    <div class="social-container">
+        <a href="https://instagram.com/shrikantxprajapati" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbD8Cdl1nozEcF2mjs1S" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+        <a href="https://t.me/diamondmax_india" target="_blank" class="social-icon telegram"><i class="fab fa-telegram-plane"></i></a>
+    </div>
+
     <script>
-                function startSecurityCheck() {
+        function startSecurityCheck() {
             document.getElementById("verify-btn").style.display = "none";
             document.getElementById("progress-container").style.display = "block";
             

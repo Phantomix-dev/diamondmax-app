@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Phantomix | DiamondMax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         #matrix {
@@ -45,7 +47,6 @@
         h2 { color: #b026ff; }
         p { color: #a0a0a0; font-size: 18px; }
 
-      
         .download-btn {
             display: inline-block;
             background-color: #b026ff;
@@ -127,28 +128,28 @@
     </style>
     
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Shrikant Prajapati",
-  "url": "https://phantomix-sp.github.io/diamondmax-app/",
-  "jobTitle": "Founder & CEO",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Phantomix"
-  },
-  "alumniOf": {
-    "@type": "CollegeOrUniversity",
-    "name": "GLA University"
-  },
-  "sameAs": [
-    "www.youtube.com/@Phantomix_SP",
-    "https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbUpxUTdyd19lcjQ3Tm4xT3BvUUNxeGdtbUZPUXxBQ3Jtc0ttNkc2TWtQcWJueGs1d0pXRGNFMFdiSWprZ0tWYnB2UDZBVmhVR0dxVEZzWXBlTVdia25wUDZDRVlBOXhQVFBRV0JJeHV0ak5FRzNuZHRXZWotMjVLZTBDM3VObU5HQWxWaWFEekJEcTNhUXgteUgwYw&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaAQ8ww7dmei9QiQVd2m",
-    "https://medium.com/@gk2929913/why-i-paused-my-first-startup-at-17-to-learn-the-basics-of-coding-beb699e86fa9",
-    "https://instagram.com/shrikantxprajapati"
-  ]
-}
-</script>
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Shrikant Prajapati",
+      "url": "https://phantomix-sp.github.io/diamondmax-app/",
+      "jobTitle": "Founder & CEO",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Phantomix"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "GLA University"
+      },
+      "sameAs": [
+        "https://www.youtube.com/@Phantomix_SP",
+        "https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m",
+        "https://medium.com/@gk2929913/why-i-paused-my-first-startup-at-17-to-learn-the-basics-of-coding-beb699e86fa9",
+        "https://instagram.com/shrikantxprajapati"
+      ]
+    }
+    </script>
 </head>
 <body>
 
@@ -202,10 +203,10 @@
 
     <h3 style="color: #b026ff; margin-top: 10px;">Connect With Us</h3>
     <div class="social-container">
-        <a href="https://instagram.com/shrikantxprajapati" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://whatsapp.com/channel/0029VbD8Cdl1nozEcF2mjs1S" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
-        <a href="https://t.me/diamondmax_india" target="_blank" class="social-icon telegram"><i class="fab fa-telegram-plane"></i></a>
+        <a href="https://instagram.com/shrikantxprajapati" target="_blank" class="social-icon instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="YOUR_TELEGRAM_LINK_HERE" target="_blank" class="social-icon telegram"><i class="fa-brands fa-telegram"></i></a>
     </div>
 
     <script>
@@ -244,7 +245,6 @@
                 return;
             } 
 
-           
             statusText.innerHTML = "🔄 Transmitting Data to Phantomix Servers...";
             statusText.style.color = "yellow";
             statusText.style.display = "block";
@@ -264,28 +264,23 @@
             })
             .then(response => {
                 if(response.ok) {
-                   
                     emailBox.style.display = "none";
                     button.style.display = "none"; 
-                    
                     statusText.innerHTML = "🎉 Target Locked! " + userEmailData + " is securely added to the Waitlist.";
                     statusText.style.color = "#00ff00"; 
                 } else {
-                  
                     statusText.innerHTML = "⚠️ Server Connection Failed!";
                     statusText.style.color = "red";
                     button.innerHTML = "JOIN THE WAITLIST";
                 }
             })
             .catch(error => {
-            
                 statusText.innerHTML = "⚠️ Network Error! Check your internet.";
                 statusText.style.color = "red";
                 button.innerHTML = "JOIN THE WAITLIST";
             });
         }
 
-    
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         
@@ -319,6 +314,12 @@
             }
         }
         setInterval(drawMatrix, 33);
+        
+        // Window resize event banaya taaki mobile se desktop pe switch karne par matrix background kharab na ho
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>

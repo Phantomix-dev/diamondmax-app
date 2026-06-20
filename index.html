@@ -170,6 +170,164 @@ outline:none;
 width:200px;
 text-align:center;
 }
+    /* General Section Styling */
+.phantomix-section {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-header h2 {
+    font-size: 32px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.section-header span {
+    color: #0ea5e9;
+}
+
+.section-header p {
+    color: #94a3b8;
+    margin-bottom: 40px;
+}
+
+/* Features Grid */
+.features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    width: 300px;
+    border: 1px solid #334155;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: #0ea5e9;
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.15);
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Waitlist Section */
+.waitlist-container {
+    background: linear-gradient(145deg, #0f172a, #1e293b);
+    padding: 50px 30px;
+    border-radius: 15px;
+    border: 1px solid #0ea5e9;
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.1);
+}
+
+.waitlist-container h2 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.waitlist-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.waitlist-input {
+    padding: 15px 20px;
+    width: 350px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.waitlist-input:focus {
+    border-color: #0ea5e9;
+}
+
+.waitlist-btn {
+    padding: 15px 30px;
+    background: #0ea5e9;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.waitlist-btn:hover {
+    background: #0284c7;
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
+}
+
+/* Reviews Grid */
+.reviews-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.review-card {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+    text-align: left;
+    border-left: 4px solid #0ea5e9;
+}
+
+.review-text {
+    font-style: italic;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.reviewer {
+    color: #38bdf8;
+    font-size: 14px;
+}
+
+/* BIG BRAND INTERACTIVE ANIMATION (Scroll Reveal) */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 </style>
 </head>
 
@@ -177,7 +335,6 @@ text-align:center;
 <div class="top-left-nav">
     <a href="about.html" class="nav-link">About Phantomix</a>
 </div>
-<!-- POPUP -->
 <div id="popup">
 <div class="box">
 <h2>Welcome to Phantomix</h2>
@@ -186,7 +343,6 @@ text-align:center;
 </div>
 </div>
 
-<!-- LOADER -->
 <div id="loader">
 <h2>PHANTOMIX SYSTEM</h2>
 <div id="loader-bar"><div></div></div>
@@ -194,7 +350,6 @@ text-align:center;
 
 <canvas id="matrix"></canvas>
 
-<!-- LOGO RESTORED -->
 <img src="logo.png" width="120" style="border-radius:50%;box-shadow:0 0 20px #00ffff;">
 
 <h1>PHANTOMIX SYSTEM</h1>
@@ -225,7 +380,6 @@ DOWNLOAD APK
 
 <p id="msg"></p>
 
-<!-- SOCIAL RESTORED -->
 <div class="social">
 <a href="https://instagram.com/shrikantxprajapati"><i class="fab fa-instagram"></i></a>
 <a href="https://www.youtube.com/@Phantomix_SP"><i class="fab fa-youtube"></i></a>
@@ -234,184 +388,21 @@ DOWNLOAD APK
 </div>
 
 <div id="toast"></div>
-
-<script>
-
-/* POPUP */
-function closePopup(){
-document.getElementById("popup").style.display="none";
-}
-
-/* LOADER */
-setTimeout(()=>document.getElementById("loader").style.display="none",3000);
-
-/* VERIFY FIXED */
-function verify(){
-let bar=document.getElementById("bar");
-let box=document.getElementById("progress");
-let status=document.getElementById("status");
-let apk=document.getElementById("apk");
-
-box.style.display="block";
-let w=0;
-
-let t=setInterval(()=>{
-w++;
-bar.style.width=w+"%";
-status.innerText="Scanning "+w+"%";
-
-if(w>=100){
-clearInterval(t);
-status.innerText="Device Secured ✅";
-apk.style.display="inline-block";
-}
-},30);
-}
-
-/* EMAIL */
-function save(){
-let email=document.getElementById("email").value;
-if(!email.includes("@")){
-showToast("Invalid Email ❌");
-return;
-}
-document.getElementById("msg").innerText="Added ✅";
-}
-
-/* TOAST FIX */
-function showToast(text){
-let t=document.getElementById("toast");
-t.innerText=text;
-t.style.opacity="1";
-t.style.transform="translateX(0)";
-setTimeout(()=>{
-t.style.opacity="0";
-t.style.transform="translateX(120%)";
-},2500);
-}
-
-/* LIVE TOAST SAFE */
-setInterval(()=>{
-let msgs=[
-"🔥 New user joined",
-"💎 VIP unlocked",
-"🚀 Device verified",
-"⚡ System active"
-];
-showToast(msgs[Math.floor(Math.random()*msgs.length)]);
-},6000);
-
-/* CLEAN COUNTDOWN (REAL FUTURE DATE) */
-let launch = new Date("2028-01-01T00:00:00").getTime();
-
-setInterval(()=>{
-let now = new Date().getTime();
-let diff = launch - now;
-
-let d = Math.floor(diff/(1000*60*60*24));
-let h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-let m = Math.floor((diff%(1000*60*60))/(1000*60));
-let s = Math.floor((diff%(1000*60))/1000);
-
-if(diff<=0){
-document.getElementById("timer").innerText="🚀 LAUNCHED";
-return;
-}
-
-document.getElementById("timer").innerText =
-d+"d "+h+"h "+m+"m "+s+"s";
-},1000);
-
-/* MATRIX FIXED */
-let c=document.getElementById("matrix");
-let ctx=c.getContext("2d");
-
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-
-let letters="01ABCXYZ#$%";
-let font=14;
-let cols=Math.floor(c.width/font);
-let drops=Array(cols).fill(1);
-
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,c.width,c.height);
-ctx.fillStyle="#0f0";
-ctx.font=font+"px monospace";
-
-for(let i=0;i<drops.length;i++){
-let text=letters[Math.floor(Math.random()*letters.length)];
-ctx.fillText(text,i*font,drops[i]*font);
-
-if(drops[i]*font>c.height && Math.random()>0.95)drops[i]=0;
-drops[i]++;
-}
-}
-setInterval(draw,33);
-
-</script>
-<!-- PHANTOMIX AI BUTTON -->
-<button id="phantomix-chat-toggle">
-    <img src="assets/phantomix-logo.png" alt="Phantomix AI">
-</button>
-
-<!-- PHANTOMIX CHAT WINDOW -->
-<div id="phantomix-chat">
-
-    <div class="phantomix-header">
-
-        <div class="phantomix-brand">
-            <img src="assets/phantomix-logo.png" alt="Logo">
-
-            <div>
-                <h3>Phantomix AI</h3>
-                <span>Online</span>
-            </div>
+    <section id="features" class="phantomix-section scroll-reveal">
+    <div class="section-header">
+        <h2>Why <span>DiamondMax?</span> 💎</h2>
+        <p>A revolutionary app built for the modern tech landscape.</p>
+    </div>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Lightning Fast</h3>
+            <p>Optimized architecture ensures zero lag and blazing fast load times.</p>
         </div>
-
-        <button
-        id="phantomix-close"
-        class="phantomix-close">
-            ✕
-        </button>
-
-    </div>
-
-    <div
-    id="phantomix-messages"
-    class="phantomix-messages">
-
-        <div class="phantomix-welcome">
-            <h4>Welcome to Phantomix</h4>
-
-            <p>
-                Ask about Phantomix,
-                DiamondMax, software development,
-                AI solutions, or any general question.
-            </p>
+        <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>Premium UI/UX</h3>
+            <p>A sleek, frameless dark-mode design that feels like the future.</p>
         </div>
-
-    </div>
-
-    <div class="phantomix-input">
-
-        <input
-        id="phantomix-input"
-        type="text"
-        placeholder="Ask Phantomix AI...">
-
-        <button
-        id="phantomix-send"
-        class="phantomix-send">
-            ➤
-        </button>
-
-    </div>
-
-</div>
-<script src="phantomix-data.js"></script>
-<script src="chatbot.js"></script>
-</body>
-  
-</html>
+        <div class="

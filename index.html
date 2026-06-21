@@ -499,6 +499,67 @@
         .tech-item:hover span {
             color: #cbd5e1;
         }
+                /* FAQ Section Styling */
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .faq-item {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #0ea5e9;
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.1);
+        }
+
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #0ea5e9;
+        }
+
+        .faq-icon {
+            color: #0ea5e9;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            padding: 0 20px;
+            background: rgba(15, 23, 42, 0.3);
+        }
+
+        /* Active State Classes (Toggled via JS) */
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust if answer is very long */
+            padding-bottom: 20px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item.active {
+            border-color: #0ea5e9;
+        }
 
 
         /* Scroll Reveal Animation */
@@ -661,8 +722,7 @@
                 </div>
             </div>
         </div>
-    </section>
-
+        </section>
 
     <section class="phantomix-section scroll-reveal">
         <h2>Why DiamondMax?</h2>
@@ -686,6 +746,53 @@
             </div>
         </div>
     </section>
+        <section class="phantomix-section scroll-reveal" style="max-width: 800px;">
+        <h2>Frequently Asked <span style="color: #0ea5e9;">Questions</span></h2>
+        <p style="color: #94a3b8; margin-bottom: 40px;">Everything you need to know about Phantomix and DiamondMax.</p>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4 style="margin: 0; font-size: 16px;">What exactly is DiamondMax?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p style="margin: 0; padding-top: 15px; color: #cbd5e1; font-size: 14px; line-height: 1.6;">DiamondMax is our upcoming flagship application designed to revolutionize digital experiences. While we are keeping the exact features under wraps, it promises a sleek, secure, and ultra-fast environment.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4 style="margin: 0; font-size: 16px;">When will the app launch?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p style="margin: 0; padding-top: 15px; color: #cbd5e1; font-size: 14px; line-height: 1.6;">The official global launch is scheduled for January 2028. However, early access beta testing will begin in 2027 for those who have joined our waitlist.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4 style="margin: 0; font-size: 16px;">What are the benefits of joining the waitlist?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p style="margin: 0; padding-top: 15px; color: #cbd5e1; font-size: 14px; line-height: 1.6;">Waitlist members will receive priority beta access, exclusive early-adopter badges, and premium features locked for regular users upon official launch.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4 style="margin: 0; font-size: 16px;">Is Phantomix looking for investors?</h4>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p style="margin: 0; padding-top: 15px; color: #cbd5e1; font-size: 14px; line-height: 1.6;">Yes, as a pre-seed startup, we are actively exploring strategic partnerships and angel investments. You can reach out via the 'Partner With Us' section below.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <section class="phantomix-section scroll-reveal">
         <div class="waitlist-container">
@@ -781,6 +888,25 @@
                 observer.observe(section);
             });
         });
+                // FAQ Accordion Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Close all other open items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
+
     </script>
 </body>
 </html>

@@ -447,6 +447,58 @@
         .roadmap-item.upcoming .roadmap-content {
             opacity: 0.7;
         }
+                /* Tech Stack Section Styling */
+        .tech-stack-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(51, 65, 85, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-item i {
+            font-size: 36px;
+            filter: grayscale(100%); /* Makes them grey initially */
+            transition: all 0.3s ease;
+        }
+
+        .tech-item span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s ease;
+        }
+
+        /* Color reveals on hover */
+        .tech-item:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .tech-item:hover i {
+            filter: grayscale(0%);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .tech-item:hover span {
+            color: #cbd5e1;
+        }
 
 
         /* Scroll Reveal Animation */
@@ -484,6 +536,33 @@
             <a href="https://whatsapp.com/channel/0029VaAQ8ww7dmei9QiQVd2m" target="_blank"><i class="fab fa-whatsapp"></i></a>
             <a href="https://t.me/diamondmax_india" target="_blank"><i class="fab fa-telegram"></i></a>
         </div>
+            <section class="phantomix-section scroll-reveal" style="padding-top: 20px; padding-bottom: 20px;">
+        <p style="color: #64748b; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">Powered By Next-Gen Tech</p>
+        
+        <div class="tech-stack-container">
+            <div class="tech-item" title="Flutter">
+                <i class="fa-brands fa-flutter" style="color: #54C5F8;"></i>
+                <span>Flutter</span>
+            </div>
+            <div class="tech-item" title="Python">
+                <i class="fa-brands fa-python" style="color: #3776AB;"></i>
+                <span>Python</span>
+            </div>
+            <div class="tech-item" title="Figma">
+                <i class="fa-brands fa-figma" style="color: #F24E1E;"></i>
+                <span>Figma</span>
+            </div>
+            <div class="tech-item" title="GitHub">
+                <i class="fa-brands fa-github" style="color: #ffffff;"></i>
+                <span>GitHub</span>
+            </div>
+            <div class="tech-item" title="Cloud Native">
+                <i class="fa-solid fa-cloud" style="color: #0ea5e9;"></i>
+                <span>Cloud</span>
+            </div>
+        </div>
+    </section>
+
             <section class="phantomix-section scroll-reveal" style="max-width: 1100px;">
         <div class="founder-updates-container">
             

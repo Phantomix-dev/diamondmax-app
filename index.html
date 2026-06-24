@@ -1610,6 +1610,31 @@
             };
             updateCount();
         });
+        // 11. Secret Hacker Easter Egg (Type 'HACK')
+        let secretCode = "HACK";
+        let inputBuffer = "";
+
+        document.addEventListener("keydown", function(e) {
+            // Jo bhi key press hogi usko save karenge
+            inputBuffer += e.key.toUpperCase();
+            
+            // Agar buffer lamba ho jaye, toh aage se kaat denge
+            if (inputBuffer.length > secretCode.length) {
+                inputBuffer = inputBuffer.substring(1);
+            }
+            
+            // Agar user ne exactly "HACK" type kar diya
+            if (inputBuffer === secretCode) {
+                const hackerScreen = document.getElementById("hacker-screen");
+                hackerScreen.style.display = "flex"; // Screen show karega
+                
+                // 5 second baad automatically hata dega
+                setTimeout(() => {
+                    hackerScreen.style.display = "none";
+                    inputBuffer = ""; // Reset buffer
+                }, 5000);
+            }
+        });
     </script>
 
     <footer class="phantomix-footer">
@@ -1641,5 +1666,12 @@
             <p>Made with <span style="color: #ef4444; animation: pulse 1.5s infinite;">❤</span> in India by Shrikant Prajapati</p>
         </div>
     </footer>
+    <div id="hacker-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(2, 6, 23, 0.98); z-index: 10000; flex-direction: column; justify-content: center; align-items: center; color: #10b981; font-family: 'Courier New', Courier, monospace; text-align: center; padding: 20px;">
+        <i class="fas fa-user-secret" style="font-size: 60px; margin-bottom: 20px; animation: pulse 1s infinite;"></i>
+        <h2 style="color: #ef4444; margin-bottom: 10px; font-family: 'Courier New', Courier, monospace;">> SYSTEM BREACH DETECTED_</h2>
+        <p style="font-size: 18px; margin: 5px 0;">> OVERRIDING DIAMONDMAX PROTOCOLS...</p>
+        <p style="font-size: 18px; margin: 5px 0;">> WELCOME TO THE PHANTOMIX MAINFRAME, ELITE FOUNDER.</p>
+        <p style="color: #64748b; font-size: 14px; margin-top: 30px; animation: blink 1s infinite;">[ Access Granted - Automatically closing in 5s... ]</p>
+    </div>
 </body>
 </html>

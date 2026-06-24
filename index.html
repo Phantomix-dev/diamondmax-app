@@ -995,6 +995,53 @@
             .footer-content { flex-direction: column; }
             .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
         }
+        /* --- Live Network Status Styling --- */
+        .status-container {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .status-label {
+            color: #64748b;
+        }
+
+        .status-value {
+            font-weight: 600;
+        }
+
+        .status-value.operational {
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot-green {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #10b981;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
     </style>
 </head>
 
@@ -1356,6 +1403,27 @@
             <p id="msg" style="color: #10b981; font-weight: bold; margin-top: 15px; display: none;">✅ Successfully added to the waitlist!</p>
         </div>
     </section>
+    <section class="phantomix-section scroll-reveal" style="max-width: 600px;">
+        <div class="status-container">
+            <h3 style="margin-top: 0; font-size: 18px; color: #ffffff; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-shield-halved" style="color: #0ea5e9;"></i> Phantomix Security Core
+            </h3>
+            <div class="status-grid" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+                <div class="status-item">
+                    <span class="status-label">Mainframe:</span>
+                    <span class="status-value operational"><span class="dot-green"></span> Operational</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Your Connection:</span>
+                    <span class="status-value encrypted" id="user-connection">Securing...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Encryption:</span>
+                    <span class="status-value standard">AES-256</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="phantomix-section scroll-reveal" style="margin-bottom: 80px;">
         <div class="investor-container">
@@ -1646,6 +1714,26 @@
                 }, 5000);
             }
         });
+        // 12. Live Connection Status Monitor
+        function updateConnectionStatus() {
+            const connStatus = document.getElementById("user-connection");
+            
+            if (navigator.onLine) {
+                // Agar user online hai, toh custom dynamic network speed/type monitor mapping
+                const speed = navigator.connection ? navigator.connection.downlink + " Mbps" : "Online";
+                connStatus.innerHTML = `<span style="color: #0ea5e9;"><i class="fas fa-lock"></i> Encrypted (${speed})</span>`;
+            } else {
+                // Agar user offline ho jata hai
+                connStatus.innerHTML = `<span style="color: #ef4444;"><i class="fas fa-triangle-exclamation"></i> Disconnected</span>`;
+            }
+        }
+
+        // Listen for network changes
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Initial invocation
+        updateConnectionStatus();
     </script>
 
     <footer class="phantomix-footer">

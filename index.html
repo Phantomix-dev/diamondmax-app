@@ -818,6 +818,51 @@ body {
             .nav-btn { display: none; } /* Hide the button to save space for hamburger */
             .hamburger-btn { display: block; }
         }
+            /* --- Viral Share Buttons Styling --- */
+        .share-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .share-btn.whatsapp {
+            background: rgba(37, 211, 102, 0.1);
+            color: #25d366;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+        }
+
+        .share-btn.whatsapp:hover {
+            background: #25d366;
+            color: white;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .share-btn.twitter {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .share-btn.twitter:hover {
+            background: #ffffff;
+            color: black;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Mobile View Tweaks */
+        @media (max-width: 480px) {
+            .share-tools { flex-direction: column; }
+        }
     </style>
 </head>
 
@@ -1063,6 +1108,14 @@ body {
                 <button class="generate-btn" onclick="generatePassword()">
                     <i class="fas fa-bolt"></i> Generate Secure Password
                 </button>
+                    <div class="share-tools" style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="share-btn whatsapp" onclick="shareOnWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Share on WhatsApp
+                    </button>
+                    <button class="share-btn twitter" onclick="shareOnTwitter()">
+                        <i class="fa-brands fa-x-twitter"></i> Share on X
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -1266,6 +1319,27 @@ body {
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('active');
+        }
+            // Viral Share Logic
+        function shareOnWhatsApp() {
+            const siteUrl = "https://phantomix-dev.github.io/diamondmax-app/";
+            const message = "🔥 Just found an ultra-secure Password Generator by Phantomix! Check it out and join the DiamondMax Waitlist: " + siteUrl;
+            
+            // Check if user is on mobile
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                window.open(`whatsapp://send?text=${encodeURIComponent(message)}`, '_blank');
+            } else {
+                window.open(`https://web.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+            }
+        }
+
+        function shareOnTwitter() {
+            const siteUrl = "https://phantomix-dev.github.io/diamondmax-app/";
+            const text = "I just generated an unbreakable password using Diamond-Vault by Phantomix! 🔒💎 Check it out: " + siteUrl + " #CyberSecurity #Phantomix #DiamondMax";
+            
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
         }
     </script>
 </body>

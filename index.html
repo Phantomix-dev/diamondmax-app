@@ -943,6 +943,52 @@ body {
             color: #020617;
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
         }
+            /* --- Live Stats Counter Styling --- */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(14, 165, 233, 0.6);
+        }
+
+        .stat-box h3 {
+            font-size: 32px;
+            color: #0ea5e9;
+            margin: 0;
+            text-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .stat-box p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin: 5px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile View Tweaks */
+        @media (max-width: 600px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 
@@ -991,6 +1037,20 @@ body {
         <p class="tagline">Secure • Fast • Reliable</p>
 
         <h2>💎 DiamondMax App</h2>
+            <div class="hero-stats">
+            <div class="stat-box">
+                <h3 class="counter" data-target="1250">0</h3>
+                <p>Waitlisted Users</p>
+            </div>
+            <div class="stat-box">
+                <h3 class="counter" data-target="99">0</h3>
+                <p>% Uptime Guaranteed</p>
+            </div>
+            <div class="stat-box">
+                <h3 class="counter" data-target="24">0</h3>
+                <p>Tech Partners</p>
+            </div>
+        </div>
         
         <p style="color: #94a3b8; margin-top: 30px; margin-bottom: 5px;">🚀 Official Launch Countdown</p>
         <div id="timer">Calculating...</div>
@@ -1521,6 +1581,33 @@ body {
             startBtn.innerHTML = '<i class="fas fa-redo"></i> Try Again';
             timeDisplay.innerText = "0s";
         }
+            // Animated Stats Counter Logic
+        const counters = document.querySelectorAll('.counter');
+        const speed = 100; // Speed of counting (lower is faster)
+
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                
+                // Calculate increment
+                const inc = target / speed;
+
+                if (count < target) {
+                    // Update the number safely
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 20); // Delay between increments
+                } else {
+                    // Add cool symbols at the end
+                    if(target > 1000) counter.innerText = target + "+";
+                    else if(target === 99) counter.innerText = target + "%";
+                    else counter.innerText = target;
+                }
+            };
+
+            // Start the counting animation
+            updateCount();
+        });
     </script>
 </body>
 </html>

@@ -1385,6 +1385,44 @@
         @media (max-width: 768px) {
             .feature-tier { transform: scale(1) !important; margin-top: 10px; }
         }
+        /* --- Crowdfunding & FOMO Engine Styling --- */
+        .fomo-container {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: left;
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.05);
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: #020617;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .progress-bar-fill {
+            width: 0%; /* JS se dynamically target mapping hogi */
+            height: 100%;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .live-activity-box {
+            margin-top: 20px;
+            background: rgba(2, 6, 23, 0.5);
+            border: 1px dashed rgba(16, 185, 129, 0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
     </style>
 </head>
 
@@ -1835,13 +1873,38 @@
             </div>
         </div>
     </section>
+
+    <section class="phantomix-section scroll-reveal" style="max-width: 800px; padding-bottom: 10px;">
+        <div class="fomo-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 14px; color: #94a3b8; font-family: monospace;"><i class="fas fa-server" style="color: #8b5cf6;"></i> Core Engine Development Fund</span>
+                <span style="font-size: 14px; color: #10b981; font-weight: bold; font-family: monospace;" id="funding-percentage">64% Funded</span>
+            </div>
+            
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-bar-node"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 15px; font-family: monospace; font-size: 13px;">
+                <div><span style="color: #64748b;">RAISED:</span> <b style="color: #fff;" id="raised-amount">₹0</b></div>
+                <div><span style="color: #64748b;">TARGET:</span> <b style="color: #0ea5e9;">₹25,000</b></div>
+                <div><span style="color: #64748b;">BACKERS:</span> <b style="color: #8b5cf6;" id="backers-count">0</b></div>
+            </div>
+
+            <div class="live-activity-box">
+                <div class="pulse-dot" style="width: 8px; height: 8px; background: #10b981; box-shadow: 0 0 8px #10b981;"></div>
+                <span id="live-activity-text" style="color: #10b981; font-family: monospace; font-size: 12px;">Monitoring secure transactions...</span>
+            </div>
+        </div>
+    </section>
+
     <section class="phantomix-section scroll-reveal" style="max-width: 900px;" id="funding-nodes">
         <h2 style="color: #ffffff; margin-bottom: 5px;">Fund the <span style="color: #0ea5e9;">Mainframe</span></h2>
         <p style="color: #94a3b8; margin-bottom: 40px;">Support development & secure lifetime elite privileges before the global launch.</p>
         
         <div class="tier-grid" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; text-align: left;">
             
-            <div class="tier-card">
+            <div class="tier-card" id="funding-nodes">
                 <span class="tier-badge" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; border-color: #0ea5e9;">ALPHA NODE</span>
                 <h3 class="tier-price">₹29 <span style="font-size: 14px; color: #64748b; font-weight: normal;">/ lifetime</span></h3>
                 <p class="tier-desc">For early believers who want complete utility mapping.</p>
@@ -2276,7 +2339,53 @@
 
             // Display modal
             modal.style.display = "flex";
+        }// 18. Mainframe Crowdfunding & FOMO Simulator Engine
+        function runFomoEngine() {
+            const targetAmount = 25000;
+            const currentPercentage = 68; // Aap is percentage ko manually badha sakte hain
+            const totalRaised = Math.ceil((targetAmount * currentPercentage) / 100);
+            const totalBackers = Math.ceil(totalRaised / 74); // realistic average ticket count
+
+            // Initial UI Mapping with animation delay
+            setTimeout(() => {
+                const fillBar = document.getElementById("progress-bar-node");
+                const raisedText = document.getElementById("raised-amount");
+                const backersText = document.getElementById("backers-count");
+                const percentText = document.getElementById("funding-percentage");
+
+                if(fillBar) fillBar.style.width = currentPercentage + "%";
+                if(raisedText) raisedText.innerText = "₹" + totalRaised.toLocaleString('en-IN');
+                if(backersText) backersText.innerText = totalBackers;
+                if(percentText) percentText.innerText = currentPercentage + "% Funded";
+            }, 800);
+
+            // Live Activity Feed Simulation Loop (FOMO Trigger)
+            const activityText = document.getElementById("live-activity-text");
+            const activities = [
+                "🚀 [SYSTEM] New 'Core Architect (₹99)' slot locked by user node_***42",
+                "⚡ [MAINFRAME] New 'Alpha Node (₹29)' activated from region_IN",
+                "🔒 [STEALTH] Anonymous node transmitted a secure backing contribution",
+                "👑 [FOUNDER] Tier 2 Architect slot initialized successfully",
+                "🟢 [NETWORK] Mainframe validation loop complete. Synchronizing nodes..."
+            ];
+
+            setInterval(() => {
+                if(!activityText) return;
+                // Random updates stream simulation
+                const randomIndex = Math.floor(Math.random() * activities.length);
+                
+                // Fade out effect structure
+                activityText.style.opacity = 0;
+                setTimeout(() => {
+                    activityText.innerText = activities[randomIndex];
+                    activityText.style.opacity = 1;
+                }, 400);
+            }, 12000); // Har 12 second me realistic alert pop karega
         }
+
+        // Initialize Loop
+        runFomoEngine();
+        
     </script>
 
     <footer class="phantomix-footer">

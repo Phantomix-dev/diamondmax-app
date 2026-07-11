@@ -2171,9 +2171,9 @@
             menu.classList.toggle('active');
         }
 
-        // 7. Viral Share Logic
+                // 7. Viral Share Logic
         function shareOnWhatsApp() {
-            const siteUrl = "https://phantomix-dev.github.io/diamondmax-app/";
+            const siteUrl = "https://phantomix-dev.github.io/";
             const message = "🔥 Just found an ultra-secure Password Generator by Phantomix! Check it out and join the DiamondMax Waitlist: " + siteUrl;
             
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -2185,10 +2185,11 @@
         }
 
         function shareOnTwitter() {
-            const siteUrl = "https://phantomix-dev.github.io/diamondmax-app/";
+            const siteUrl = "https://phantomix-dev.github.io/";
             const text = "I just generated an unbreakable password using Diamond-Vault by Phantomix! 🔒💎 Check it out: " + siteUrl + " #CyberSecurity #Phantomix #DiamondMax";
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
         }
+
 
         // 8. Tab Switch Magic
         let originalTitle = document.title; 

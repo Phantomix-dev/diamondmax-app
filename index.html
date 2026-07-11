@@ -2344,21 +2344,19 @@
 
         // Run on load
         simulatePing();
-        // 14. Native Mobile Web Share API Integration
+                // 14. Native Mobile Web Share API Integration
         function inviteNative() {
             const shareData = {
                 title: 'Phantomix | DiamondMax',
                 text: '🔥 Join the elite waitlist for DiamondMax app by Phantomix. Secure your early access beta role today!',
-                url: 'https://phantomix-dev.github.io/diamondmax-app/'
+                url: 'https://phantomix-dev.github.io/'
             };
 
-            // Agar user actual android/iOS mobile device par hai
             if (navigator.share) {
                 navigator.share(shareData)
                     .then(() => console.log('Mainframe invite sent.'))
                     .catch((err) => console.log('Share canceled:', err));
             } else {
-                // PC Users ke liye fall-back (yeh automatically text copy kar dega clipboard par)
                 navigator.clipboard.writeText(shareData.text + " " + shareData.url);
                 let msg = document.getElementById("msg");
                 if (msg) {
@@ -2369,6 +2367,7 @@
                 }
             }
         }
+
         // 15. Global Cyber Toast Notification System
         function showCyberToast(message, isSuccess = true) {
             const toast = document.getElementById("cyber-toast");

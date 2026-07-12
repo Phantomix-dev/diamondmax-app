@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Terminal | Phantomix</title>
+    <style>
+        body { background-color: #0a0a0a; color: #00ff00; font-family: monospace; text-align: center; padding: 50px; }
+        input { width: 80%; padding: 15px; background: #111; color: #00ff00; border: 1px solid #00ff00; font-size: 1.1em; text-align: center; font-family: monospace; }
+        #qr-canvas { margin: 30px auto; padding: 20px; background: #111; border: 2px solid #00ff00; display: inline-block; min-width: 128px; min-height: 128px; }
+        /* QR library inner canvas configuration override */
+        #qr-canvas img { display: block; margin: 0 auto; border: 4px solid #111; }
+        p { color: #888; }
+    </style>
+</head>
+<body>
+
+    <h1>📡 Quick QR Terminal</h1>
+    <p>Real-time vector matrix encoder.</p>
+
+    <input type="text" id="qr-data" placeholder="Paste secure URL or text stream here..." oninput="generateQRMatrix()">
+
+    <div>
+        <div id="qr-canvas"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script>
+        // Global handler instantiation for reference control
+        let qrContainer = document.getElementById("qr-canvas");
+        let qrcodeInstance = null;
+
+        function generateQRMatrix() {
+            const rawString = document.getElementById("qr-data").value;
+
+            // Container clean down for redraw event logic
+            qrContainer.innerHTML = "";
+
+            if(!rawString) {
+                return;
+            }
+
+            // Client runtime instance compilation
+            qrcodeInstance = new QRCode(qrContainer, {
+                text: rawString,
+                width: 160,
+                height: 160,
+                colorDark : "#00ff00",  // Hardcore Neon Green Matrix
+                colorLight : "#111111", // Dark Node Background
+                correctLevel : QRCode.CorrectLevel.H // High error correction protocol
+            });
+        }
+    </script>
+</body>
+</html>

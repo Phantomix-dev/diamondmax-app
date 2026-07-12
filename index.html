@@ -2161,7 +2161,7 @@
             });
         });
 
-                function generatePassword() {
+        function generatePassword() {
             const length = document.getElementById('pass-length').value;
             const incUpper = document.getElementById('inc-uppercase').checked;
             const incNums = document.getElementById('inc-numbers').checked;
@@ -2216,8 +2216,10 @@
             }
         }
 
-    
-        // Hamara naya dynamic toast popup chalega yahan
+        // 🛠️ The Missing copyPassword() Function - Restored!
+        function copyPassword() {
+            const passText = document.getElementById('generated-password').innerText;
+            navigator.clipboard.writeText(passText).then(() => {
                 showCyberToast("🔒 Password copied securely to mainframe!");
             });
         }
@@ -2249,7 +2251,7 @@
             menu.classList.toggle('active');
         }
 
-                // 7. Viral Share Logic
+        // 7. Viral Share Logic
         function shareOnWhatsApp() {
             const siteUrl = "https://phantomix-dev.github.io/";
             const message = "🔥 Just found an ultra-secure Password Generator by Phantomix! Check it out and join the DiamondMax Waitlist: " + siteUrl;
@@ -2553,7 +2555,7 @@
                 <h4>Quick Links</h4>
                 <a href="#hero-section">Home</a>
                 <a href="#features-section">Features</a>
-                <a href="apps.html">Our Apps</a>
+                <a href="apps">Our Apps</a>
                 <a href="#vault-section">Diamond-Vault</a>
                 <a href="#terminal-section">Terminal</a>
                 <a href="#roadmap-section">Roadmap</a>

@@ -30,82 +30,80 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script>
-        // Yahan hum apna JavaScript logic likhenge agle step mein!
-              // 1. Supabase Connection Set Karein
+        // 1. Supabase Connection Set Karein
         const supabaseUrl = "https://pekmsttmosuzcvielala.supabase.co";
         const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBla21zdHRtb3N1emN2aWVsYWxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MjY4NDUsImV4cCI6MjA5OTAwMjg0NX0.D0akjMO2d5sYhgbSy8IIFJT4sPHGO_Lm9r1YMWM_uUc";
 
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // 2. Note Banane Ka Function
-async function createNote() {
-    const message = document.getElementById('secret-message').value;
-    
-    if (!message) {
-        alert("Pehle koi secret message toh likho, CEO Sahab!");
-        return;
-    }
-
-    // Supabase mein data insert karein
-    const { data, error } = await supabase
-        .from('burner_notes')
-        .insert([{ message: message }])
-        .select();
-
-    if (error) {
-        console.error(error);
-        alert("Transmission failed. Network error!");
-    } else {
-        const noteId = data[0].id;
-        // Unique Shareable Link banayein
-        const link = window.location.origin + window.location.pathname + "?note=" + noteId;
-        
-        document.getElementById('link-box').innerHTML = `
-            Transmission Ready! Send this link: <br><br>
-            <a href="${link}" target="_blank" style="color:#00ff00; text-decoration:underline;">${link}</a>
-        `;
-        document.getElementById('secret-message').value = ""; // Textbox clear karein
-    }
-}
-
-// 3. Link Check aur Self-Destruct Function
-async function checkUrlForNote() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const noteId = urlParams.get('note');
-
-    // Agar URL mein ?note=XYZ hai, toh note dikhao aur DELETE maro!
-    if (noteId) {
-        document.getElementById('create-section').classList.add('hidden');
-        document.getElementById('read-section').classList.remove('hidden');
-
-        // Database se note padho
-        const { data, error } = await supabase
-            .from('burner_notes')
-            .select('message')
-            .eq('id', noteId)
-            .single();
-
-        if (data) {
-            // Note screen par print karein
-            document.getElementById('decrypted-message').value = data.message;
+        async function createNote() {
+            const message = document.getElementById('secret-message').value;
             
-            // THE BLAST: Turant database se hamesha ke liye delete kar do! 💥
-            await supabase
+            if (!message) {
+                alert("Pehle koi secret message toh likho, CEO Sahab!");
+                return;
+            }
+
+            // Supabase mein data insert karein
+            const { data, error } = await supabase
                 .from('burner_notes')
-                .delete()
-                .eq('id', noteId);
-        } else {
-            // Agar dost ne dobara link kholne ki koshish ki
-            document.getElementById('decrypted-message').value = "[ERROR] Message not found. It has already self-destructed. 💥";
-            document.getElementById('decrypted-message').style.color = "red";
+                .insert([{ message: message }])
+                .select();
+
+            if (error) {
+                console.error("Supabase Error:", error);
+                alert("Transmission failed. Error: " + error.message);
+            } else if (data && data.length > 0) {
+                const noteId = data[0].id;
+                // Unique Shareable Link banayein
+                const link = window.location.origin + window.location.pathname + "?note=" + noteId;
+                
+                document.getElementById('link-box').innerHTML = `
+                    Transmission Ready! Send this link: <br><br>
+                    <a href="${link}" target="_blank" style="color:#00ff00; text-decoration:underline;">${link}</a>
+                `;
+                document.getElementById('secret-message').value = ""; // Textbox clear karein
+            }
         }
-    }
-}
 
-// Page load hote hi URL check karein
-window.onload = checkUrlForNote;
+        // 3. Link Check aur Self-Destruct Function
+        async function checkUrlForNote() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const noteId = urlParams.get('note');
 
+            // Agar URL mein ?note=XYZ hai, toh note dikhao aur DELETE maro!
+            if (noteId) {
+                document.getElementById('create-section').classList.add('hidden');
+                document.getElementById('read-section').classList.remove('hidden');
+
+                // Database se note padho
+                const { data, error } = await supabase
+                    .from('burner_notes')
+                    .select('message')
+                    .eq('id', noteId)
+                    .single();
+
+                if (data) {
+                    // Note screen par print karein
+                    document.getElementById('decrypted-message').value = data.message;
+                    
+                    // THE BLAST: Turant database se delete
+                    await supabase
+                        .from('burner_notes')
+                        .delete()
+                        .eq('id', noteId);
+                } else {
+                    document.getElementById('decrypted-message').value = "[ERROR] Message not found. It has already self-destructed. 💥";
+                    document.getElementById('decrypted-message').style.color = "red";
+                }
+            }
+        }
+
+        // Page load hote hi URL check karein
+        window.onload = checkUrlForNote;
     </script>
 </body>
 </html>

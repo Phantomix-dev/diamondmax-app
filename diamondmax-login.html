@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiamondMax | Secure Gateway</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #0B1221;
+            --card-bg: rgba(21, 30, 50, 0.7);
+            --border-color: rgba(14, 165, 233, 0.2);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --diamond-blue: #0ea5e9;
+            --diamond-glow: rgba(14, 165, 233, 0.5);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            /* Subtle radial gradient focus on center */
+            background-image: radial-gradient(circle at center, #15233d 0%, var(--bg-main) 70%);
+        }
+
+        .gateway-container {
+            width: 100%; max-width: 400px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 40px 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            backdrop-filter: blur(15px); text-align: center;
+            box-sizing: border-box; margin: 20px;
+        }
+
+        .brand { font-size: 28px; font-weight: 800; color: white; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .brand i { color: var(--diamond-blue); text-shadow: 0 0 15px var(--diamond-glow); }
+        .subtitle { color: var(--text-muted); font-size: 12px; margin-bottom: 30px; letter-spacing: 1.5px; font-weight: 600; }
+        
+        /* LOGIN / REGISTER TABS */
+        .tab-container {
+            display: flex; background: rgba(0,0,0,0.3); border-radius: 10px; margin-bottom: 25px; padding: 5px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .tab {
+            flex: 1; padding: 10px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 8px; color: var(--text-muted); transition: 0.3s;
+        }
+        .tab.active { background: var(--diamond-blue); color: white; box-shadow: 0 0 10px var(--diamond-glow); }
+        
+        /* INPUT FIELDS */
+        .input-group { margin-bottom: 20px; text-align: left; position: relative; }
+        .input-group i { position: absolute; top: 14px; left: 15px; color: var(--text-muted); font-size: 14px; }
+        .input-group input {
+            width: 100%; padding: 13px 15px 13px 45px; box-sizing: border-box;
+            background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; color: white; font-family: 'Poppins', sans-serif;
+            font-size: 14px; transition: 0.3s; outline: none;
+        }
+        .input-group input:focus { border-color: var(--diamond-blue); box-shadow: 0 0 10px rgba(14, 165, 233, 0.2); background: rgba(0,0,0,0.4); }
+        
+        /* SUBMIT BUTTON */
+        .auth-btn {
+            width: 100%; background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: white; border: none; padding: 15px; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+        }
+        .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(14, 165, 233, 0.5); }
+        
+        #register-fields { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="gateway-container">
+        <div class="brand"><i class="fa-solid fa-gem"></i> DiamondMax</div>
+        <div class="subtitle">SECURE ECOSYSTEM GATEWAY</div>
+        
+        <div class="tab-container">
+            <div class="tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+            <div class="tab" id="tab-register" onclick="switchTab('register')">Create Account</div>
+        </div>
+
+        <form id="auth-form" onsubmit="processAuth(event)">
+            <div id="register-fields">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Choose a Username">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            
+            <button type="submit" class="auth-btn" id="submit-btn">Enter Vault</button>
+        </form>
+    </div>
+
+    <script>
+        function switchTab(mode) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const registerFields = document.getElementById('register-fields');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (mode === 'login') {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                registerFields.style.display = 'none';
+                document.getElementById('username').required = false;
+                submitBtn.innerText = 'Enter Vault';
+            } else {
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+                registerFields.style.display = 'block';
+                document.getElementById('username').required = true;
+                submitBtn.innerText = 'Initialize Account';
+            }
+        }
+
+        function processAuth(event) {
+            event.preventDefault(); // Stop page reload
+            
+            // Visual feedback loop
+            const btn = document.getElementById('submit-btn');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+            btn.style.opacity = '0.8';
+            btn.style.pointerEvents = 'none';
+
+            // Fake 1.5s delay to simulate server check, then teleport to the dashboard
+            setTimeout(() => {
+                window.location.href = "diamondmax-dashboard.html";
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

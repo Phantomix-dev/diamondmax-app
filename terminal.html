@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Terminal | Phantomix</title>
+    <style>
+        :root {
+            --neon-green: #00ff00;
+            --bg-dark: #050505;
+            --panel-bg: #111111;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--neon-green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            height: 90vh;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+        /* LEFT COMMANDS MATRIX INDEX */
+        .commands-panel {
+            width: 30%;
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.05);
+        }
+        .commands-panel h3 { margin-top: 0; border-bottom: 1px dashed var(--neon-green); padding-bottom: 10px; }
+        .cmd-item { margin: 15px 0; font-size: 0.9em; }
+        .cmd-name { color: #ffffff; font-weight: bold; background: #222; padding: 2px 6px; border-radius: 4px; }
+        
+        /* RIGHT INTERACTIVE TERMINAL WINDOW */
+        .terminal-window {
+            width: 70%;
+            background: #000000;
+            border: 2px solid var(--neon-green);
+            border-radius: 10px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+        .terminal-output {
+            flex-grow: 1;
+            overflow-y: auto;
+            text-align: left;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+        .prompt { color: #ffffff; font-weight: bold; margin-right: 10px; }
+        input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--neon-green);
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="commands-panel">
+        <h3>📋 DIRECTORY COMMANDS</h3>
+        <p style="color: #888; font-size: 0.85em;">Available system vectors:</p>
+        
+        <div class="cmd-item"><span class="cmd-name">help</span> - Display database operational codes.</div>
+        <div class="cmd-item"><span class="cmd-name">scan net</span> - Run diagnostic scan on grid nodes.</div>
+        <div class="cmd-item"><span class="cmd-name">sys info</span> - Output hardware virtualization vectors.</div>
+        <div class="cmd-item"><span class="cmd-name">matrix run</span> - Initialize automated code stream cascading.</div>
+        <div class="cmd-item"><span class="cmd-name">clear</span> - Flush screen data buffer logs.</div>
+    </div>
+
+    <div class="terminal-window">
+        <div class="terminal-output" id="output-box">PHANTOMIX VIRTUAL CORE LOADED...
+Type 'help' to fetch active matrix protocols.</div>
+        
+        <div class="input-line">
+            <span class="prompt">phantomix@core:~#</span>
+            <input type="text" id="terminal-input" autocomplete="off" autofocus onkeydown="processCommand(event)">
+        </div>
+    </div>
+
+    <script>
+        const outputBox = document.getElementById('output-box');
+        const inputField = document.getElementById('terminal-input');
+
+        function printToTerminal(text) {
+            outputBox.innerText += "\n" + text;
+            outputBox.scrollTop = outputBox.scrollHeight; // Auto scroll parameters configuration
+        }
+
+        function processCommand(event) {
+            if (event.key !== 'Enter') return;
+
+            const fullInput = inputField.value.trim();
+            inputField.value = ""; // Input buffer extraction reset
+
+            if (!fullInput) return;
+
+            printToTerminal("phantomix@core:~# " + fullInput);
+            const lowerInput = fullInput.toLowerCase();
+
+            // LOGIC MATRIX MAP EVALUATION
+            if (lowerInput === 'help') {
+                printToTerminal(">> AVAILABLE SECTORS:\n - help: Show this directory\n - scan net: Map network ports\n - sys info: Check core host specs\n - matrix run: Stream decryption codes\n - clear: Wipe console nodes");
+            } 
+            else if (lowerInput === 'clear') {
+                outputBox.innerText = "TERMINAL FLUSH COMPLETE. LOG DATA WIPED.";
+            } 
+            else if (lowerInput === 'sys info') {
+                printToTerminal(">> CORE HARDWARE VECTORS:\n HOST OS: Phantomix Sandbox v4.0\n KERNEL: JS-Client-Engine-2.06\n CPU: Virtualized Thread Array\n STATUS: OPERATIONAL [100%]");
+            } 
+            else if (lowerInput === 'scan net') {
+                printToTerminal(">> INITIALIZING SUBNET PORT SCAN...");
+                let nodes = ["[+] Scanning 192.168.1.1 ... [OPEN] -> Port 80", "[+] Scanning 10.0.0.5 ... [SECURE] -> Firewall Block", "[+] Mapping network gateway tokens... [SUCCESS]", ">> GRID HEALTH STATUS: STEADY."];
+                nodes.forEach((node, index) => {
+                    setTimeout(() => printToTerminal(node), (index + 1) * 600);
+                });
+            } 
+            else if (lowerInput === 'matrix run') {
+                printToTerminal(">> LAUNCHING DECRYPTION STREAM...");
+                let lines = ["01001001 01010100 01010011 01000001", "11001010 11101010 10101100 00110011", "SYSTEM WARNING: RE-ROUTING MATRIX OVERLAP", "[DEPLOYMENT PACKETS DECRYPTED SUCCESSFULLY]"];
+                lines.forEach((line, idx) => {
+                    setTimeout(() => printToTerminal(line), (idx + 1) * 500);
+                });
+            } 
+            else {
+                printToTerminal(`[-] COMMAND ERROR: '${fullInput}' unrecognized. Reference the Left Command Matrix index panel.`);
+            }
+        }
+    </script>
+</body>
+</html>

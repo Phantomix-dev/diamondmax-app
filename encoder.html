@@ -5,93 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cipher Machine | Phantomix</title>
     <style>
-        :root { --neon-green: #00ff00; --bg-dark: #050505; --panel-bg: #111111; }
-        body { background-color: var(--bg-dark); color: #fff; font-family: 'Courier New', monospace; text-align: center; padding: 30px; margin: 0; }
-        .encoder-container { max-width: 700px; margin: 0 auto; background: var(--panel-bg); border: 2px solid var(--neon-green); border-radius: 12px; padding: 30px; box-shadow: 0 0 25px rgba(0, 255, 0, 0.1); }
-        h1 { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,255,0,0.3); margin-top: 0; }
+        :root {
+            --bg-main: #0B1221;
+            --card-bg: #151E32;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --accent-blue: #3B82F6;
+        }
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-align: center; padding: 20px 15px; margin: 0; display: flex; justify-content: center; }
+        .encoder-container { width: 100%; max-width: 650px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); box-sizing: border-box; }
+        h1 { font-size: 1.6em; margin-top: 0; margin-bottom: 5px; font-weight: 700; }
+        p { color: var(--text-muted); font-size: 0.95em; margin-bottom: 30px; }
         .input-group { margin-bottom: 25px; text-align: left; }
-        label { font-weight: bold; color: var(--neon-green); display: block; margin-bottom: 5px; font-size: 0.9em; }
-        textarea { width: 100%; height: 90px; background: #000; color: var(--neon-green); border: 1px dashed #444; border-radius: 6px; padding: 15px; font-family: monospace; font-size: 1.1em; resize: none; box-sizing: border-box; }
-        textarea:focus { border-color: var(--neon-green); outline: none; box-shadow: inset 0 0 10px rgba(0,255,0,0.1); }
-        .copy-btn { background: #222; color: var(--neon-green); border: 1px solid var(--neon-green); padding: 5px 12px; cursor: pointer; float: right; font-size: 0.8em; margin-top: -28px; margin-right: 5px; position: relative; border-radius: 4px; font-weight: bold; }
-        .copy-btn:hover { background: var(--neon-green); color: #000; }
+        label { font-weight: 600; color: var(--text-main); display: block; margin-bottom: 8px; font-size: 0.9em; letter-spacing: 0.5px; }
+        textarea { width: 100%; height: 90px; background: rgba(0,0,0,0.2); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; font-family: 'Courier New', monospace; font-size: 1.05em; resize: none; box-sizing: border-box; transition: 0.3s; }
+        textarea:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .copy-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: none; padding: 6px 12px; cursor: pointer; float: right; font-size: 0.8em; margin-top: -30px; margin-right: 5px; position: relative; border-radius: 6px; font-weight: 600; transition: 0.2s; }
+        .copy-btn:hover { background: var(--accent-blue); color: #fff; }
     </style>
 </head>
 <body>
-
     <div class="encoder-container">
-        <h1>🔢 CIPHER MACHINE</h1>
-        <p style="color: #666; margin-bottom: 30px; font-size: 0.9em;">SYSTEM PROTOCOL: AUTO-SYNC ENABLED</p>
-
+        <h1>🔢 Cipher Machine</h1>
+        <p>SYSTEM PROTOCOL: AUTO-SYNC ENABLED</p>
         <div class="input-group">
             <label>STANDARD TEXT STREAM</label>
             <button class="copy-btn" onclick="copyText('text-input')">COPY</button>
             <textarea id="text-input" placeholder="Type normal text here to encrypt..." oninput="convertFromText()"></textarea>
         </div>
-
         <div class="input-group">
             <label>BINARY MACHINE CODE (Base2)</label>
             <button class="copy-btn" onclick="copyText('binary-input')">COPY</button>
-            <textarea id="binary-input" placeholder="01110100 01100101 01111000 01110100..." oninput="convertFromBinary()"></textarea>
+            <textarea id="binary-input" placeholder="01110100 01100101..." oninput="convertFromBinary()"></textarea>
         </div>
-
         <div class="input-group">
             <label>HEXADECIMAL CIPHER (Base16)</label>
             <button class="copy-btn" onclick="copyText('hex-input')">COPY</button>
             <textarea id="hex-input" placeholder="74 65 78 74..." oninput="convertFromHex()"></textarea>
         </div>
     </div>
-
     <script>
-        // Setup DOM Access
-        const textInput = document.getElementById('text-input');
-        const binInput = document.getElementById('binary-input');
-        const hexInput = document.getElementById('hex-input');
-
-        // Logic 1: Typing in Text updates Binary & Hex
+        const textInput = document.getElementById('text-input'); const binInput = document.getElementById('binary-input'); const hexInput = document.getElementById('hex-input');
         function convertFromText() {
-            let str = textInput.value;
-            if(!str) { binInput.value = ""; hexInput.value = ""; return; }
-            
+            let str = textInput.value; if(!str) { binInput.value = ""; hexInput.value = ""; return; }
             binInput.value = str.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
             hexInput.value = str.split('').map(char => char.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
         }
-
-        // Logic 2: Typing in Binary updates Text & Hex
         function convertFromBinary() {
-            let binStr = binInput.value.trim().replace(/[^01 ]/g, ""); // Allow only 0, 1 and spaces
-            if(!binStr) { textInput.value = ""; hexInput.value = ""; return; }
-
+            let binStr = binInput.value.trim().replace(/[^01 ]/g, ""); if(!binStr) { textInput.value = ""; hexInput.value = ""; return; }
             let binArray = binStr.split(' ').filter(b => b.length > 0);
-            
             try {
                 let textResult = binArray.map(b => String.fromCharCode(parseInt(b, 2))).join('');
-                textInput.value = textResult;
-                hexInput.value = textResult.split('').map(char => char.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
-            } catch(e) { } // Ignore partial typing errors
-        }
-
-        // Logic 3: Typing in Hex updates Text & Binary
-        function convertFromHex() {
-            let hexStr = hexInput.value.trim().replace(/[^0-9a-fA-F ]/g, ""); // Allow only valid Hex
-            if(!hexStr) { textInput.value = ""; binInput.value = ""; return; }
-
-            let hexArray = hexStr.split(' ').filter(h => h.length > 0);
-            
-            try {
-                let textResult = hexArray.map(h => String.fromCharCode(parseInt(h, 16))).join('');
-                textInput.value = textResult;
-                binInput.value = textResult.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+                textInput.value = textResult; hexInput.value = textResult.split('').map(char => char.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
             } catch(e) { }
         }
-
-        // Clipboard Protocol
+        function convertFromHex() {
+            let hexStr = hexInput.value.trim().replace(/[^0-9a-fA-F ]/g, ""); if(!hexStr) { textInput.value = ""; binInput.value = ""; return; }
+            let hexArray = hexStr.split(' ').filter(h => h.length > 0);
+            try {
+                let textResult = hexArray.map(h => String.fromCharCode(parseInt(h, 16))).join('');
+                textInput.value = textResult; binInput.value = textResult.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+            } catch(e) { }
+        }
         function copyText(elementId) {
-            const el = document.getElementById(elementId);
-            if(!el.value) return;
-            navigator.clipboard.writeText(el.value).then(() => {
-                alert("Copied to system clipboard! 🎯");
-            });
+            const el = document.getElementById(elementId); if(!el.value) return;
+            navigator.clipboard.writeText(el.value).then(() => { alert("Copied to clipboard!"); });
         }
     </script>
 </body>

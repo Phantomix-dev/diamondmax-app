@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Tracker | Phantomix</title>
+    <style>
+        :root { --neon-green: #00ff00; --bg-dark: #050505; --panel-bg: #111111; }
+        body { background-color: var(--bg-dark); color: #fff; font-family: 'Courier New', monospace; text-align: center; padding: 30px; margin: 0; }
+        .scanner-container { max-width: 650px; margin: 0 auto; background: var(--panel-bg); border: 2px solid var(--neon-green); border-radius: 12px; padding: 30px; box-shadow: 0 0 25px rgba(0, 255, 0, 0.1); text-align: left; }
+        h1 { color: var(--neon-green); text-shadow: 0 0 10px rgba(0,255,0,0.3); margin-top: 0; text-align: center; }
+        
+        .scan-btn { width: 100%; background: var(--neon-green); color: #000; padding: 15px; font-size: 1.2em; font-weight: bold; border: none; cursor: pointer; font-family: monospace; border-radius: 6px; margin-bottom: 20px; }
+        .scan-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+        
+        .data-grid { display: none; grid-template-columns: 1fr; gap: 15px; }
+        .data-row { background: #000; padding: 15px; border-left: 4px solid var(--neon-green); border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .label { color: #888; font-size: 0.9em; font-weight: bold; }
+        .value { color: var(--neon-green); font-size: 1.1em; word-break: break-all; text-align: right; max-width: 60%; }
+        
+        #loading { display: none; color: #ff003c; text-align: center; font-size: 1.2em; font-weight: bold; margin: 20px 0; }
+        .warning { text-align: center; color: #ff003c; margin-top: 20px; font-size: 0.9em; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="scanner-container">
+        <h1>🕵️‍♂️ HARDWARE FINGERPRINT</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">WARNING: BYPASSING BROWSER CLOAKING PROTOCOLS</p>
+
+        <button class="scan-btn" id="start-btn" onclick="runScan()">EXTRACT HARDWARE DATA</button>
+        
+        <div id="loading">DECRYPTING SYSTEM NODE... PLEASE WAIT [||||||||||  ]</div>
+
+        <div class="data-grid" id="results">
+            <div class="data-row"><span class="label">OS PLATFORM:</span><span class="value" id="res-os">Loading...</span></div>
+            <div class="data-row"><span class="label">CPU CORES:</span><span class="value" id="res-cpu">Loading...</span></div>
+            <div class="data-row"><span class="label">SYSTEM RAM:</span><span class="value" id="res-ram">Loading...</span></div>
+            <div class="data-row"><span class="label">GPU ENGINE:</span><span class="value" id="res-gpu">Loading...</span></div>
+            <div class="data-row"><span class="label">RESOLUTION MATRIX:</span><span class="value" id="res-screen">Loading...</span></div>
+            <div class="data-row"><span class="label">TIMEZONE VECTOR:</span><span class="value" id="res-tz">Loading...</span></div>
+        </div>
+
+        <div class="warning" id="warning-text">
+            [!] This hardware combination makes your device 98.4% unique on the internet. You are being tracked.
+        </div>
+    </div>
+
+    <script>
+        function getGPU() {
+            try {
+                let canvas = document.createElement('canvas');
+                let gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                let debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                return gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+            } catch (e) {
+                return "GPU Cloaked / Blocked";
+            }
+        }
+
+        function runScan() {
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            // Extract Data
+            const os = navigator.platform || "Unknown OS";
+            const cpu = navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " Logical Cores" : "Unknown";
+            const ram = navigator.deviceMemory ? navigator.deviceMemory + " GB+" : "Unknown";
+            const screenData = `${screen.width} x ${screen.height} (${screen.colorDepth}-bit color)`;
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const gpu = getGPU();
+
+            // Cinematic Delay Effect
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'grid';
+                document.getElementById('warning-text').style.display = 'block';
+
+                document.getElementById('res-os').innerText = os;
+                document.getElementById('res-cpu').innerText = cpu;
+                document.getElementById('res-ram').innerText = ram;
+                document.getElementById('res-gpu').innerText = gpu;
+                document.getElementById('res-screen').innerText = screenData;
+                document.getElementById('res-tz').innerText = tz;
+            }, 1800); // 1.8 seconds delay for dramatic effect
+        }
+    </script>
+</body>
+</html>

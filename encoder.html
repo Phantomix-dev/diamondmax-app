@@ -61,6 +61,23 @@
         textarea:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .copy-btn { background: rgba(255,255,255,0.1); color: var(--text-main); border: none; padding: 6px 12px; cursor: pointer; float: right; font-size: 0.8em; margin-top: -30px; margin-right: 5px; position: relative; border-radius: 6px; font-weight: 600; transition: 0.2s; }
         .copy-btn:hover { background: var(--accent-blue); color: #fff; }
+        /* 🎚️ CUSTOM CYBER SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px; /* Scrollbar ki motai */
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a; /* Dark background */
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
+        }
     </style>
 </head>
 <body>

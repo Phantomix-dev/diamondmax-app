@@ -67,6 +67,23 @@
         .btn-phish:hover { background: var(--accent-red); color: #fff; }
         #feedback { margin-top: 20px; font-size: 1.1em; font-weight: 600; min-height: 30px; }
         @media (max-width: 480px) { .choice-btn { width: 100%; margin: 8px 0; } }
+        /* 🎚️ CUSTOM CYBER SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px; /* Scrollbar ki motai */
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a; /* Dark background */
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
+        }
     </style>
 </head>
 <body>

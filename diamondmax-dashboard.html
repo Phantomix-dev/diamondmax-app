@@ -122,6 +122,23 @@
         }
         .claim-btn:hover { background: var(--diamond-blue); color: white; box-shadow: 0 0 15px var(--diamond-glow); }
         .claim-btn:disabled { background: rgba(16, 185, 129, 0.1); color: var(--success-green); border-color: var(--success-green); cursor: not-allowed; box-shadow: none; }
+    /* 🎚️ CUSTOM CYBER SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px; /* Scrollbar ki motai */
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a; /* Dark background */
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(14, 165, 233, 0.5); /* Neon Blue semi-transparent */
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(14, 165, 233, 1); /* Hover par full bright Neon Blue */
+        }
     </style>
 </head>
 <body>

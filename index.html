@@ -1945,6 +1945,22 @@
     </section>
 
     <section class="phantomix-section scroll-reveal" style="max-width: 800px;">
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); padding: 25px; border-radius: 12px; text-align: left; position: relative; overflow: hidden; box-shadow: 0 5px 20px rgba(16, 185, 129, 0.1);">
+            
+            <div style="position: absolute; top: -15px; right: -15px; font-size: 100px; opacity: 0.03; color: #10b981; pointer-events: none;">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            
+            <h3 style="margin-top: 0; color: #10b981; font-size: 18px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-user-shield"></i> Cyber Tip of the Moment
+            </h3>
+            <p id="daily-tip-text" style="color: #cbd5e1; font-size: 15px; line-height: 1.6; margin-bottom: 0;">
+                Initializing secure transmission...
+            </p>
+        </div>
+    </section>
+
+    <section class="phantomix-section scroll-reveal" style="max-width: 800px;">
         <h2>Frequently Asked <span style="color: #0ea5e9;">Questions</span></h2>
         <p style="color: #94a3b8; margin-bottom: 40px;">Everything you need to know about Phantomix and DiamondMax.</p>
 
@@ -2720,6 +2736,35 @@
 
         // Initialize Loop
         runFomoEngine();
+        // 19. Cyber Security Tip Engine
+        const cyberTips = [
+            "Never reuse passwords across different platforms. If one site gets breached, all your accounts are at risk.",
+            "Public Wi-Fi is a playground for data sniffers. Avoid doing financial transactions on open networks without a VPN.",
+            "Phishing emails often create a false sense of urgency. Always double-check the actual sender's email address.",
+            "Keep your device software updated. Those annoying updates often contain critical security patches.",
+            "Enable Two-Factor Authentication (2FA) on all your primary email and financial accounts.",
+            "Use a secure password generator (like Diamond-Vault) instead of memorizing weak passwords.",
+            "Avoid clicking on shortened links in unsolicited text messages or emails."
+        ];
+
+        function displayDailyTip() {
+            const tipElement = document.getElementById("daily-tip-text");
+            if(tipElement) {
+                // Randomly select a tip from the array
+                const randomIndex = Math.floor(Math.random() * cyberTips.length);
+                
+                // Add a small fade effect for premium feel
+                tipElement.style.opacity = 0;
+                setTimeout(() => {
+                    tipElement.innerText = cyberTips[randomIndex];
+                    tipElement.style.transition = "opacity 0.5s ease";
+                    tipElement.style.opacity = 1;
+                }, 300);
+            }
+        }
+
+        // Run the tip generator when the page loads
+        window.addEventListener('load', displayDailyTip);
         
     </script>
 

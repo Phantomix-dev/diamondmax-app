@@ -1538,6 +1538,26 @@
             align-items: center;
             gap: 12px;
         }
+        /* 🖱️ CUSTOM NEON CURSOR STYLING */
+        .glow-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8), 0 0 40px rgba(14, 165, 233, 0.4);
+            pointer-events: none; /* Taaki clicks block na hon */
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+            transition: width 0.2s, height 0.2s, background 0.2s, box-shadow 0.2s;
+            display: none; /* Default hidden */
+        }
+        /* Mobile touch screens par hide karna zaroori hai */
+        @media (max-width: 768px) {
+            .glow-cursor { display: none !important; }
+        }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
@@ -1550,6 +1570,7 @@
 </head>
 
 <body>
+    <div class="glow-cursor"></div>
     <div class="news-ticker-container">
         <div class="ticker-title"><i class="fas fa-bolt"></i> FEEDS:</div>
         <div class="ticker-wrap">
@@ -2761,6 +2782,37 @@
                     tipElement.style.opacity = 1;
                 }, 300);
             }
+        }
+
+        // 20. Custom Neon Glow Cursor Logic
+        const glowCursor = document.querySelector('.glow-cursor');
+
+        // Check if device has a real mouse (ignore mobile touch screens)
+        if (window.matchMedia("(pointer: fine)").matches) {
+            glowCursor.style.display = 'block';
+            
+            // Mouse move hone par dot ko pointer ke piche chalana
+            document.addEventListener('mousemove', (e) => {
+                glowCursor.style.left = e.clientX + 'px';
+                glowCursor.style.top = e.clientY + 'px';
+            });
+
+            // Buttons/Links par aate hi color aur size change karna
+            const clickables = document.querySelectorAll('a, button, input, .feature-card, .tier-card, .faq-question');
+            clickables.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    glowCursor.style.width = '45px';
+                    glowCursor.style.height = '45px';
+                    glowCursor.style.background = 'rgba(16, 185, 129, 0.3)'; // Neon Green
+                    glowCursor.style.boxShadow = '0 0 25px rgba(16, 185, 129, 0.8)';
+                });
+                item.addEventListener('mouseleave', () => {
+                    glowCursor.style.width = '20px';
+                    glowCursor.style.height = '20px';
+                    glowCursor.style.background = 'rgba(14, 165, 233, 0.4)'; // Back to Neon Blue
+                    glowCursor.style.boxShadow = '0 0 20px rgba(14, 165, 233, 0.8), 0 0 40px rgba(14, 165, 233, 0.4)';
+                });
+            });
         }
 
         // Run the tip generator when the page loads
